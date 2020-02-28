@@ -1,7 +1,8 @@
-Microtask 0:
-Download PyCharm and get familiar with it (for instance, you can follow this tutorial).\
+# Microtask 0:
+Download PyCharm and get familiar with it (for instance, you can follow this tutorial).
 
-Result:
-Downloaded pycharm in my debian buster with desktop environment mate.
+__Result__:
 
-Attachments:
+Downloaded pycharm in my debian buster (desktop environment mate).
+
+__Attachments__:
