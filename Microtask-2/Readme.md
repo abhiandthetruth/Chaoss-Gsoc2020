@@ -11,4 +11,4 @@ Create a Python script to execute Perceval via its Python interface using the Gi
 Sir perceval is going on the quest and returning succesfully!!
 
 ## Attachments
-![Image](Microtask-2/Microtask-2.png)
+![Image](/Microtask-2/Microtask-2.png)
