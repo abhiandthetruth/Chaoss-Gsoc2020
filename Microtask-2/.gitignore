@@ -1,2 +1,2 @@
-config.ini
-venv
+./config.ini
+./venv
