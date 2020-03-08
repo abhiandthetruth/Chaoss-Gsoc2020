@@ -48,8 +48,6 @@ kibiter_time_from= "now-1y"
 kibiter_default_index= "git"
 kibiter_url = http://admin:admin@localhost:5601
 community = true
-gitlab-issues = true
-gitlab-merges = true
 github-repos = true
 
 [phases]
@@ -143,10 +141,13 @@ I used the chaoss repos since my custom repos don't have much data in them :).
 * Wait and do not be impatient.
 
 # Results
-Indexes are made in elastic search and dashboards added according to the data input.
+Indexes are made in elastic search and dashboards added according to the data input. You can see them at `http://localhost:5601/`. Do not forget to login with admin:admin. 
 
 # Attachments
 ![image](/Microtask-5/image1.png)
 ![image](/Microtask-5/image2.png)
 ![image](/Microtask-5/image3.png)
 ![image](/Microtask-5/image4.png)
+![image](/Microtask-5/image5.png)
+![image](/Microtask-5/image6.png)
+![image](/Microtask-5/image7.png)
