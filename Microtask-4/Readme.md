@@ -18,4 +18,4 @@ Set up a dev environment to work on GrimoireLab. Have a look to https://github.c
 * Set up Finished. You can now run micro-mordred or p2o whatever you want.
 
 # Attachments
-  
+![image](/Microtask-4/image.png)
