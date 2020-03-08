@@ -2,6 +2,7 @@
 Build a Data Table visualization in Kibiter (you can use the CHAOSS community dashboard) that shows for emails (mbox index) the text of emails (split row by Termbody_extract field).
 
 # Procedure
+* Go to kibiter. In this case http://localhost:5601.
 * Go to the visualize wizard from the left-navbar.
 * Click on the ```+``` button to create new visualization.
 * Select ```Data Table``` under Data visuaslization type.
