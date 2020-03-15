@@ -50,7 +50,7 @@ if '' not in repos:
         repo = gitlab.GitLab(owner=owner, repository=repository, api_token=api_keys)
         # Getting list of issues and prs
         issueList = repo.fetch(category='issue')
-        prList = repo.fetch(category='pull_request')
+        prList = repo.fetch(category='merge_request')
         # printing the issues
         for issue in issueList:
             print(issue)
