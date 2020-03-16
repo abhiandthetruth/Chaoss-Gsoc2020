@@ -29,7 +29,7 @@ Execute micro-mordred to collect and enrich data from a groupsio repository. You
   [sortinghat]
   host = 127.0.0.1
   user = root
-  password = leosingh
+  password = xxxx
   database = abhi_shdb
   load_orgs = true
   orgs_file = data/orgs_sortinghat.json
