@@ -15,7 +15,7 @@ Set up a dev environment to work on GrimoireLab. Have a look to https://github.c
 
 # Result
 
-* Set up Finished. You can now run micro-mordred or p2o whatever you want.
+* Set up Finished. You can now run micro-mordred or p2o whatever you want. p2o is ascript present in GrimoireELK. It comes with the facility to retrieve data from various sources using perceval and create both raw and enriched indices(it does the job of enriching those raw indices and uploading the resulting data as enriched index) in elasticsearch from the data. This data can be used to produce kibana/kibiter dashboards but p2o cannot do that, we need `kidash` for that. Whereas `micromordred` contains all the modules and along with doing whatever p2o does it can also create dashboards using kidash inherently. 
 
 # Attachments
 ![image](/Microtask-4/image.png)
