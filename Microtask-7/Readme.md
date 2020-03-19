@@ -3,7 +3,7 @@ Install and use elasticdump to download the mapping and data of an ElasticSearch
 
 # Procedure
 * ```npm install elasticdump -g```. Where ```-g``` directs npm to install the package globally so that it is available as a command line utility.
-* ```export NODE_TLS_REJECT_UNAUTHORIZED=0```. This indicates node not to reject unauthorized tls requests. For some reasons the elastic search setup fails to produce a valid ssl cerificate.
+* ```export NODE_TLS_REJECT_UNAUTHORIZED=0```. This indicates node not to reject unauthorized tls requests. For some reasons the elastic search with searchguard setup fails to produce a valid ssl cerificate.
 * ```elasticdump --input=https://admin:admin@localhost:9200/git_chaoss_enriched --output=/home/abhia/Downloads/es_git_chaoss_enriched_mapping.json --type=mapping```
 * ```elasticdump --input=https://admin:admin@localhost:9200/git_chaoss_enriched --output=/home/abhia/Downloads/es_git_chaoss_enriched_data.json --type=data```
 
