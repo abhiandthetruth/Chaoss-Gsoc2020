@@ -6,7 +6,7 @@ from configparser import ConfigParser
 config = ConfigParser()
 config.read('/home/abhia/Documents/config.ini')
 
-# Getting the Global Declarations
+# Getting the Global Parameters
 ELASTIC_SEARCH_URL = config.get('elastic_search', 'url')
 INDEX = config.get('elastic_search', 'index')
 FIELDS = [string.strip() for string in config.get('elastic_search', 'fields').split(',')]
@@ -22,7 +22,7 @@ PAYLOAD = {
 
 
 def get_hits(size=100):
-    """Retrieves all the hits given the global params"""
+    """Returns all hits given index, fields, url globally and passed size of one fetch"""
     url = ELASTIC_SEARCH_URL + "/" + INDEX + "/_search?scroll=1m&size="+str(size)
     r = SESSION.post(url, data=json.dumps(PAYLOAD), headers={'Content-Type':'application/json'})
     raw_data = r.json()
@@ -56,7 +56,7 @@ def generate_csv(hits, filename):
         writer.writerows(records)
 
 def main():
-    """The main function which manages the tasks"""
+    """The main function"""
     hits = get_hits()
     generate_csv(hits, INDEX)
     print("Done!!")
