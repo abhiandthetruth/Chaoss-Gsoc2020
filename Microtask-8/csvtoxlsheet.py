@@ -59,7 +59,6 @@ def insert_to_sheet(csv_path, sheet_name, spreadsheet_id, coordinates):
     
     service = get_gservice()
     sheets = service.spreadsheets()
-    # Get the spread sheet
     if spreadsheet_id:
         spreadsheet = sheets.get(spreadsheetId=spreadsheet_id).execute()
     else:   
@@ -69,11 +68,9 @@ def insert_to_sheet(csv_path, sheet_name, spreadsheet_id, coordinates):
             }
         }
         spreadsheet = service.spreadsheets().create(body=spreadsheet).execute()
-    # Get data from csv
     csv_data = ''
     with open(csv_path, 'r') as csvfile:
         csv_data = csvfile.read()
-    # Prepare the Co-ordinates
     row_idx, col_idx = 0, 0
     if coordinates:
         row_idx, col_idx = coordinates[0], coordinates[1]
@@ -82,23 +79,19 @@ def insert_to_sheet(csv_path, sheet_name, spreadsheet_id, coordinates):
         "rowIndex": row_idx,
         "columnIndex": col_idx
     }
-    # Prepare the PasteDataRequest Object
     pasteDataRequest = {
         "coordinate" : gridCoordinate,
         "data": csv_data,
         "type": 'PASTE_NORMAL',
         "delimiter": ","
     }
-    # Getting the import request ready
     import_request = {
         "pasteData": pasteDataRequest
     }
-    # Preparing the request body
     body = {
         "requests": [import_request],
         "includeSpreadsheetInResponse": False
     }
-    # Finally make teh request and print response
     response = service.spreadsheets().batchUpdate(spreadsheetId=spreadsheet.get('spreadsheetId'), body=body).execute()
     pprint(response)
 
