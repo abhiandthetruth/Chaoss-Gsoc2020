@@ -76,78 +76,37 @@ Execute micro-mordred to collect and enrich data from a groupsio repository. You
   index = groupsio_enriched
   fields = uuid, project, project_1, origin, grimoirelab_creation_date, body_extract, Subject_analyzed
   ```
-* Execute the [`estocsv.py`](/Microtask-8/csvtoxlsheet.py). Here is the content of the script, for easier access
-  ```
-  import requests
-  import json,csv
-  from configparser import ConfigParser
+Done !! Please check the scripts [estocsv.py](https://github.com/abhiandthetruth/Chaoss-Gsoc2020/blob/master/Microtask-8/estocsv.py) and [csvtoxlsheet.py](https://github.com/abhiandthetruth/Chaoss-Gsoc2020/blob/master/Microtask-8/csvtoxlsheet.py), run them to your desire.
 
-  # Get the parser ready 
-  config = ConfigParser()
-  config.read('/home/abhia/Documents/config.ini')
+Following are the descriptions:
+* estocsv.py
+  * exports the index documents with only the selected fields.
+  * command line parameter `--cfg` to specify path of `config.ini`. You are free to keep your config files anywhere as long as you specify it's path.
+* csvtoxlsheet.py
+  * Support to export the csv to xlsx and google sheets using the api.
+  * Various command line arguments are now supported: 
+ ```
+--csv : Path to the csv file, required
+--gen-xlsx: If specified,  generates the xlsx file
+--new-sheet: Name of google sheet to be created, if a new one is to be created
+--spreadsheet-id: Id of the spreadsheet the data is to be inserted, if an existing one is going to be used
+--coordinates: Co-ordinates on sheet where to add data. If not specified 0, 0 is used.
+```
+  Clearly either of `--new-sheet` or `--spreadsheet-id` is required. If both are specified `--spreadsheet-id` gets a preference over `--new-sheet`. If neither of them is specified no interaction will take with google sheets api. The spreadsheet id of a spreadsheet can be extracted from the url of the spreadsheet. Maybe I will allow users to specify spreadsheet url in future versions.
 
-  # Getting the Global Declarations
-  ELASTIC_SEARCH_URL = config.get('elastic_search', 'url')
-  INDEX = config.get('elastic_search', 'index')
-  FIELDS = [string.strip() for string in config.get('elastic_search', 'fields').split(',')]
-  HEADER = {'Content-Type':'application/json'}
-  SESSION = requests.Session()
-  PAYLOAD = {
-              "_source": {
-                  "includes": FIELDS
-              },
-              "query" : {
-                  "match_all" : {}
-              }
-          }
+Example commands 
+```
+python3 estocsv.py --cfg ./config.ini
+python3 csvtoxlsheet.py --csv ./groupsio_enriched.csv --gen-xlsx --new-sheet groupsio --coordinates 0 5
+python3 csvtoxlsheet.py --csv ./groupsio_enriched.csv --spreadsheet-id <spreadsheet-id>
+```
 
-
-  def get_hits(size=100):
-      """Retrieves all the hits given the global params"""
-      url = ELASTIC_SEARCH_URL + "/" + INDEX + "/_search?scroll=1m&size=" + str(size)
-      r = SESSION.post(url, data=json.dumps(PAYLOAD), headers=HEADER)
-      raw_data = r.json()
-      total_hits = raw_data['hits']['hits']
-      scroll_id = raw_data['_scroll_id']
-      scroll_url = ELASTIC_SEARCH_URL + "/_search/scroll"
-      scroll_payload = {
-          "scroll" : "1m", 
-          "scroll_id" : scroll_id
-      }
-      while True:
-          r = SESSION.post(scroll_url, data=json.dumps(scroll_payload), headers=HEADER)
-          raw_data = r.json()
-          scroll_id = raw_data['_scroll_id']
-          hits = raw_data['hits']['hits']
-          if len(hits) < 1:
-              break
-          total_hits.extend(hits)
-      return total_hits
-
-  def generate_csv(hits, filename):
-      """Generates the csv given the hits with filename as the name"""
-      headers = [key for key in hits[0]['_source']]
-      records = [headers]
-      for hit in hits:
-          record_dict = hit['_source']
-          record = [value for value in record_dict.values()]
-          records.append(record)
-      with open(filename+'.csv', 'w', newline='') as file:
-          writer = csv.writer(file)
-          writer.writerows(records)
-
-  def main():
-      """The main function which manages the tasks"""
-      hits = get_hits()
-      generate_csv(hits, INDEX)
-      print("Done!!")
-
-  if __name__ == "__main__":
-      main()
-  ```
+Note that you need a `credentials.json` containing the client id and client secret for the api in the working directory for the script to work. You can obtain one from [here](https://developers.google.com/sheets/api/quickstart/python). Click on `enable sheets api` button there. Download the file and paste in the working directory. For the first time, it will attempt to open a new window or tab in your default browser. If this fails, copy the URL from the console and manually open it in your browser. If you are not already logged into your Google account, you will be prompted to log in. If you are logged into multiple Google accounts, you will be asked to select one account to use for the authorization. Click the Accept button. The sample will proceed automatically, and you may close the window/tab.
+I will add the documentation later for the latest developments. 
+Please review @valeriocos. Thanks
+  
   /* I know that there is an elasticsearch helper module present for python but I started it this way so here it is.I am sorry for breaking the pep8 guidline for maximum line length. I usually don't do it :). Will improve it over time.*/
 * You can check the exported data in the `{index_name}.csv` which here is, [`groupsio_enriched.csv`](/Microtask-8/groupsio_enriched.csv).
-* Now to make it into an excel sheet execute the file [`csvtoxlsheet.py`](/Microtask-8/csvtoxlsheet.py). It uses the dependency `xlsxwriter`./* Thanks to http://coderscrowd.com/app/public/codes/view/201 for a solid reference :).*/
 * You have all you wanted.
 
 # Result
